@@ -107,9 +107,9 @@ public class QueenBoard{
 	for(int r=0; r<board.length; r++){
 	    for(int c=0; c<board.length; c++){
 		if(board[r][c]<0){
-		    str+="0 ";
+		    str+="_ ";
 		}else{
-		    str+=board[r][c]+" ";
+		    str+="Q ";
 		}
 	    }
 	    str+="\n";
@@ -118,7 +118,6 @@ public class QueenBoard{
     }
 
     public static void main(String[]args){
-	
     }
 }
     
