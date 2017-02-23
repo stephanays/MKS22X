@@ -13,7 +13,11 @@ public class KnightBoard{
 	String str="";
 	for(int r=0; r < board.length; r++){
 	    for(int c=0; c < board[0].length; c++){
-		str+=board[r][c]+" ";
+		if(board[r][c]<10){
+		    str+="0"+board[r][c]+" ";
+		}else{
+		    str+=board[r][c]+" ";
+		}
 	    }
 	    str+="\n";
 	}
@@ -26,76 +30,49 @@ public class KnightBoard{
     }
     
     private boolean solveH(int r, int c, int count){
-	if(count==1){
-	    board[r][c]=1;
-	    count++;
-	}
 	if(count > (m * n)){
 	    return true;
-	}else{
-	    if(goodSpot(r+2,c-1)){
-		board[r][c]=count;
-		count++;
-		return solveH(r+2,c-1,count);
-	    }
-	    if(goodSpot(r+2,c+1)){
-		board[r][c]=count;
-		count++;
-		return solveH(r+2,c+1,count);
-	    }
-	    if(goodSpot(r+2,c-1)){
-		board[r][c]=count;
-		count++;
-		return solveH(r+2,c-1,count);
-	    }
-	    if(goodSpot(r-2,c+1)){
-		board[r][c]=count;
-		count++;
-		return solveH(r-2,c+1,count);
-	    }
-	    if(goodSpot(r-1,c+2)){
-		board[r][c]=count;
-		count++;
-		return solveH(r-1,c+2,count);
-	    }
-	    if(goodSpot(r-1,c-2)){
-		board[r][c]=count;
-		count++;
-		return solveH(r-1,c-2,count);
-	    }
-	    if(goodSpot(r+1,c+2)){
-		board[r][c]=count;
-		count++;
-		return solveH(r+1,c+2,count);
-	    }
-	    if(goodSpot(r+1,c-2)){
-		board[r][c]=count;
-		count++;
-		return solveH(r+1,c-2,count);
-	    }
-	    
-	// else:
-	//     if isOnGoodSpot(){
-	// 	    place number;
-	// 	    try possible move ->;
-	// 	}
-	// return false;
-	//make array of possible moves (r+/-1 c+/-2) (r+/-2 c+/-1)
+	}
+	if(!(goodSpot(r,c))){
 	    return false;
+	}
+	else{
+	    board[r][c]=count;
+	    if(solveH(r+1,c+2,count+1) ||
+	       solveH(r+1,c-2,count+1) ||
+	       solveH(r-1,c+2,count+1) ||
+	       solveH(r-1,c-2,count+1) ||
+	       solveH(r+2,c+1,count+1) ||
+	       solveH(r+2,c-1,count+1) ||
+	       solveH(r-2,c+1,count+1) ||
+	       solveH(r-2,c-1,count+1)){
+		return true;
+	    }else{
+		board[r][c]=0;
+		return false;
+	    }
 	}
     }
+	
     
     private boolean goodSpot(int r, int c){
-    	if(board[r][c]==0){
-	    return true;
-    	}else{
-	    return false;
+	if(r<board.length && c<board[0].length && r>=0 && c>=0){
+	    if(board[r][c]==0){
+		return true;
+	    }else{
+		return false;
+	    }
 	}
+	return false;
     }
 
     public static void main(String[]args){
-	KnightBoard test= new KnightBoard(6,6);
+	KnightBoard test= new KnightBoard(7,7);
+        test.solve();
 	System.out.println(test);
+	KnightBoard test2= new KnightBoard(3,4);
+        test2.solve();
+	System.out.println(test2);
     }
 
 }
