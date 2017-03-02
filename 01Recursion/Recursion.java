@@ -9,6 +9,9 @@ public class Recursion{
 	if(n<0){
 	    throw new IllegalArgumentException();
 	}
+	if(n==0){
+	    return 0;
+	}
 	return helper(n,1);
     }
 
@@ -21,5 +24,6 @@ public class Recursion{
     }
 
     public static void main(String[]args){
+	System.out.println(sqrt(0));
     }
 }
