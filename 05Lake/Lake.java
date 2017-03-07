@@ -32,6 +32,73 @@ public class Lake{
 	}
     }
 
+    public void stomp(int r, int c, int num){
+	int high = findHigh(r, c);
+	int level = high - num;
+	if(land[r][c]>level){
+	    land[r][c]=level;
+	}
+	if(land[r-1][c-1]>level){
+	    land[r-1][c-1]=level;
+	}
+	if(land[r-1][c]>level){
+	    land[r-1][c]=level;
+	}
+	if(land[r-1][c+1]>level){
+	    land[r-1][c+1]=level;
+	}
+	if(land[r][c-1]>level){
+	    land[r][c-1]=level;
+	}
+	if(land[r][c+1]>level){
+	    land[r][c+1]=level;
+	}
+	if(land[r+1][c-1]>level){
+	    land[r+1][c-1]=level;
+	}
+	if(land[r+1][c]>level){
+	    land[r+1][c]=level;
+	}
+	if(land[r+1][c+1]>level){
+	    land[r+1][c+1]=level;
+	}
+    }
+
+    public int findHigh(int r, int c){
+	int highest=land[r][c];
+	if(land[r-1][c-1]>highest){
+	    highest=land[r-1][c-1];
+	}
+	if(land[r-1][c]>highest){
+	    highest=land[r-1][c];
+	}
+	if(land[r-1][c+1]>highest){
+	    highest=land[r-1][c+1];
+	}
+	if(land[r][c-1]>highest){
+	    highest=land[r][c-1];
+	}
+	if(land[r][c+1]>highest){
+	    highest=land[r][c+1];
+	}
+	if(land[r+1][c-1]>highest){
+	    highest=land[r+1][c-1];
+	}
+	if(land[r+1][c]>highest){
+	    highest=land[r+1][c];
+	}
+	if(land[r+1][c+1]>highest){
+	    highest=land[r+1][c+1];
+	}
+	return highest;
+    }
+
+    public void runCommands(){
+	for(int r=0; r<instructions.length; r++){
+	    this.stomp(instructions[r][0],instructions[r][1], instructions[r][2]);
+	}
+    }
+
     public String toString(){
 	String newstr="";
 	for(int r=0; r<land.length; r++){
@@ -40,6 +107,8 @@ public class Lake{
 	    }
 	    newstr+="\n";
 	}
+
+	
 	for(int r=0; r<instructions.length; r++){
 	    for(int c=0; c<3; c++){
 		newstr+=instructions[r][c]+" ";
@@ -51,6 +120,11 @@ public class Lake{
     
     public static void main(String[]args)throws FileNotFoundException{
 	Lake test=new Lake("data.txt");
+	System.out.println(test.toString());
+	System.out.println(test.findHigh(1,4));
+	//test.stomp(1,4,4);
+	//test.stomp(1,1,10);
+	test.runCommands();
 	System.out.println(test.toString());
     }
 		
