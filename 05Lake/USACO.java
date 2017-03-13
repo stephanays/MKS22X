@@ -5,6 +5,10 @@ public class USACO{
     private int[][]grass;
     private int[][]grass2;
     private int lake;
+    private int startRow;
+    private int startCol;
+    private int endRow;
+    private int endCol;
     private int[][]instructions;
 
     public USACO(){
@@ -157,15 +161,15 @@ public class USACO{
     public int silver(String filename){
 	try {
 	    File text= new File(filename);
-	    Scanner data=new Scanner(text);
-	    Scanner header = new Scanner(data.nextLine());
+	    Scanner sdata=new Scanner(text);
+	    Scanner header = new Scanner(sdata.nextLine());
 	    int rows = header.nextInt();
 	    int cols = header.nextInt();
 	    int period = header.nextInt();
 	    grass = new int[rows][cols];
 	    grass2 = new int[rows][cols];
 	    for(int r=0; r<rows; r++){
-		String row = data.nextLine();
+		String row = sdata.nextLine();
 		for (int c=0; c<cols; c++){
 		    if(row.charAt(c) == '*'){
 			grass[r][c]= -1;
@@ -174,19 +178,64 @@ public class USACO{
 		    }
 		}
 	    }
-
-	    Scanner instructions = new Scanner(data.nextLine());
-	    int startRow = instructions.nextInt();
-	    int startCol = instructions.nextInt();
-	    int endRow = instructions.nextInt();
-	    int endCol = instructions.nextInt();
-	    return 0;	    
+	    Scanner instructions = new Scanner(sdata.nextLine());
+	    startRow = instructions.nextInt()-1;
+	    startCol = instructions.nextInt()-1;
+	    endRow = instructions.nextInt()-1;
+	    endCol = instructions.nextInt()-1;
+	    
+	    grass[startRow][startCol]=1;
+	    for(int x=0; x<period; x++){
+		moveCow();
+	    }
+	    return grass[endRow][endCol];	    
 	}
 	catch (Exception e){
 	    System.out.println("File not found");
 	    System.exit(0);
 	}
-	return 0;
+	return grass[endRow][endCol];
+    }
+
+    public void moveCow(){
+	for(int r=0; r<grass2.length; r++){
+	    for(int c=0; c<grass2[0].length; c++){
+		if(grass[r][c]==-1){
+		    grass2[r][c]=-1;
+		}else{
+		    int up;
+		    int down;
+		    int left;
+		    int right;
+		    if(r-1<0 || grass[r-1][c] == -1){
+			up = 0;
+		    }else{
+			up = grass[r-1][c];
+		    }
+		    if(r+1>=grass.length || grass[r + 1][c] == -1){
+			down = 0;
+		    }else{
+			down = grass[r+1][c];
+		    }
+		    if(c-1<0 || grass[r][c-1] == -1){
+			left = 0;
+		    }else{
+			left = grass[r][c-1];
+		    }
+		    if(c+1 >= grass[0].length || grass[r][c+1] == -1){
+			right = 0;
+		    }else{
+			right = grass[r][c+1];
+		    }
+		    grass2[r][c]=up+down+left+right;
+		}
+	    }
+	}
+	for(int r=0; r<grass.length; r++){
+	    for(int c=0; c<grass[0].length; c++){
+		grass[r][c]=grass2[r][c];
+	    }
+	}
     }
 
     public static void main(String[]args){
@@ -202,6 +251,8 @@ public class USACO{
 	// System.out.println(test.bronze("data9.txt"));
 	// System.out.println(test.bronze("data10.txt"));
 	System.out.println(test.silver("sdata.txt"));
+	System.out.println(test.silver("sdata2.txt"));
+	System.out.println(test.silver("sdata3.txt"));
     }
 
 }
