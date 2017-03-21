@@ -4,7 +4,7 @@ public class Quick{
 	int pivot = (int) (Math.random() * (end - start));
 	int value = data[pivot];
 	int spot = 0;
-	for(int x=0; x<pivot; x++){
+	for(int x=0; x<data.length; x++){
 	    if(data[x]<value){
 		swap(data, x, spot);
 		spot++;
@@ -46,13 +46,5 @@ public class Quick{
 	int[]test={3,7,8,4,2,1,5,9,0,6};
 	System.out.println(part(test,0,test.length-1));
 	System.out.println(toString(test));
-
-	int[]ary = { 2, 10, 15, 23, 0,  5};
-	System.out.println(quickSelect(ary,0));
-	System.out.println(quickSelect(ary,1));
-	System.out.println(quickSelect(ary,2));
-	System.out.println(quickSelect(ary,3));
-	System.out.println(quickSelect(ary,4));
-	System.out.println(quickSelect(ary,5));
     }
 }
